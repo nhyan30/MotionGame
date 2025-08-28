@@ -12,6 +12,7 @@
         "com.unity.collections": "1.2.4"
       },
       "hash": "b5db919fe5d84158e742524f1f7f2e32020b0141"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
