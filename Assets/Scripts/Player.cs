@@ -1,19 +1,18 @@
+using TMPro;
 using Unity.Jobs;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5;
-    Rigidbody rb;
-
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject gameOver;
+    private int coinCollected = 0;
 
     private void Update()
     {
         HandleMovement();
+        UpdateVisual();
     }
 
 
@@ -41,6 +40,25 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.SetActive(false);
+        if (other.gameObject.tag == "Coin")
+        {
+            other.gameObject.SetActive(false);
+            coinCollected++;
+            Debug.Log(coinCollected);
+        }
+        if(other.gameObject.tag == "FinishLine")
+        {
+            gameOver.SetActive(true);
+            Time.timeScale = 0;
+            DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.PhoneNumber);
+            Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name}, Phone number: {DataManager.Instance.PhoneNumber}");
+
+            DataManager.Instance.SaveHighScores();
+        }
+    }
+
+    private void UpdateVisual()
+    {
+        scoreText.text = $"Score: {coinCollected}";
     }
 }
