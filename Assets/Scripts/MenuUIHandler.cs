@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MenuUIHandler : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameInput;
+    [SerializeField] private TMP_InputField emailInput;
     [SerializeField] private TMP_InputField phoneNumberInput;
     [SerializeField] private Button startButton;
     [SerializeField] private TMP_Text highScoreListNames;
@@ -52,6 +53,8 @@ public class MenuUIHandler : MonoBehaviour
     public void StartGame()
     {
         string name = nameInput.text;  // Gets the TextMeshPro input field for the name, the only input field on the canvas
+        string email = emailInput.text;
+        DataManager.Instance.Email = email.Trim();
         DataManager.Instance.Name = name.Trim();
         if (int.TryParse(phoneNumberInput.text, out int phone))
         {
@@ -62,6 +65,23 @@ public class MenuUIHandler : MonoBehaviour
             DataManager.Instance.PhoneNumber = 0; // fallback if input is invalid
         }
         SceneManager.LoadScene(1);
+    }
+
+    public void ClearData()
+    {
+        DataManager.Instance.HighScores.Clear();
+        DataManager.Instance.SaveHighScores();
+        Debug.Log("[ScoreTester] Cleared all high scores.");
+    }
+
+    public void ListData()
+    {
+        DataManager.Instance.LoadHighScores();
+        Debug.Log("[ScoreTester] Reloaded Scores from File:");
+        foreach (var hs in DataManager.Instance.HighScores)
+        {
+            Debug.Log($"{hs.name} : {hs.score} : {hs.email} :  {hs.phoneNumber}");
+        }
     }
 
     public void Quit()

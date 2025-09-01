@@ -1,18 +1,26 @@
+using System.Collections;
 using TMPro;
-using Unity.Jobs;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private GameObject gameOver;
-    private int coinCollected = 0;
+    [SerializeField] GameObject gameOver;
+    public int coinCollected = 0;
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (!GameManager.Instance.GameStarted) return;
         HandleMovement();
         UpdateVisual();
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
 
@@ -44,21 +52,36 @@ public class Player : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             coinCollected++;
-            Debug.Log(coinCollected);
+            //Debug.Log(coinCollected);
         }
         if(other.gameObject.tag == "FinishLine")
         {
-            gameOver.SetActive(true);
-            Time.timeScale = 0;
-            DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.PhoneNumber);
-            Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name}, Phone number: {DataManager.Instance.PhoneNumber}");
-
-            DataManager.Instance.SaveHighScores();
+            //StartCoroutine(GameManager.Instance.GameEnded());
         }
     }
+
+    //public IEnumerator GameEnded()
+    //{
+    //    yield return new WaitForSeconds(.4f);
+    //    gameOver.SetActive(true);
+    //    Time.timeScale = 0;
+    //    DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.Email, DataManager.Instance.PhoneNumber);
+    //    Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
+
+    //    DataManager.Instance.SaveHighScores();
+    //}
 
     private void UpdateVisual()
     {
         scoreText.text = $"Score: {coinCollected}";
     }
+
+    public void SaveScores()
+    {
+        DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.Email, DataManager.Instance.PhoneNumber);
+        Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
+
+        DataManager.Instance.SaveHighScores();
+    }
+
 }
