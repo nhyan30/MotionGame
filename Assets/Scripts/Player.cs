@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] GameObject gameOver;
+    [SerializeField] private TextMeshProUGUI gameOverText;
     public int coinCollected = 0;
 
     private void FixedUpdate()
@@ -22,7 +23,6 @@ public class Player : MonoBehaviour
     {
         Instance = this;
     }
-
 
     private void HandleMovement()
     {
@@ -60,20 +60,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    //public IEnumerator GameEnded()
-    //{
-    //    yield return new WaitForSeconds(.4f);
-    //    gameOver.SetActive(true);
-    //    Time.timeScale = 0;
-    //    DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.Email, DataManager.Instance.PhoneNumber);
-    //    Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
-
-    //    DataManager.Instance.SaveHighScores();
-    //}
-
     private void UpdateVisual()
     {
-        scoreText.text = $"Score: {coinCollected}";
+        scoreText.text = $"{coinCollected}";
+        gameOverText.text = $"Your Score : {coinCollected}";
     }
 
     public void SaveScores()
