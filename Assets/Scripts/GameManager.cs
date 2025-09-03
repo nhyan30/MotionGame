@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using GLTFast.Schema;
 using TMPro;
 using UnityEngine;
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour
     float elapsedTime = 0f;
 
     public bool GameStarted { get; private set; } = false;
-
 
     private void Awake()
     {
@@ -96,6 +96,6 @@ public class GameManager : MonoBehaviour
     private void UpdateVisual()
     {
         float timeRemaining = Mathf.Clamp(totalTime - elapsedTime, 0, totalTime);
-        timeLeftText.text = $"Time: {timeRemaining:F1}";
+        timeLeftText.text = $"{timeRemaining:F0}";
     }
 }
