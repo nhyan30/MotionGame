@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float totalTime = 10f; // 60 seconds 
 
     [SerializeField] Animator animator;
+    public Animator ReemyAnimator;
     float elapsedTime = 0f;
 
     public bool GameStarted { get; private set; } = false;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         GameStarted = false;
 
         animator.updateMode = AnimatorUpdateMode.UnscaledTime; //Animators are affected by Time.timeScale
+        ReemyAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     private void Start()
