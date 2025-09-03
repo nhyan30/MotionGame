@@ -6,7 +6,7 @@ public class MainManager : MonoBehaviour
     private void Start()
     {
         int randomScore = Random.Range(10, 500);
-        DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, randomScore, DataManager.Instance.PhoneNumber);
+        DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, randomScore, DataManager.Instance.Email, DataManager.Instance.PhoneNumber);
 
         Debug.Log($"Score: {randomScore} ,Name: {DataManager.Instance.Name}, Phone number: {DataManager.Instance.PhoneNumber}");
 

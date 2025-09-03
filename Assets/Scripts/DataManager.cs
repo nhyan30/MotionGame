@@ -8,6 +8,7 @@ public class DataManager : MonoBehaviour
 
     public string Name;
     public int PhoneNumber;
+    public string Email;
     public List<HighScore> HighScores;
 
     private void Awake()
@@ -25,14 +26,16 @@ public class DataManager : MonoBehaviour
 
     public class HighScore
     {
-        public HighScore(string name, int score, int phoneNumber)
+        public HighScore(string name, int score, string email, int phoneNumber)
         {
             this.name = name;
             this.score = score;
+            this.email = email;
             this.phoneNumber = phoneNumber;
         }
         public string name { get; set; }
         public int score { get; set; }
+        public string email { get; set; }
         public int phoneNumber { get; set; }
     }
 
@@ -43,10 +46,12 @@ public class DataManager : MonoBehaviour
         {
             highScoreNames = new List<string>();
             highScores = new List<int>();
+            highScoreEmails = new List<string>();
             highScorePhoneNumber = new List<int>();
         }
         public List<string> highScoreNames;
         public List<int> highScores;
+        public List<string> highScoreEmails;
         public List<int> highScorePhoneNumber;
     }
 
@@ -57,6 +62,7 @@ public class DataManager : MonoBehaviour
         {
             data.highScoreNames.Add(highScore.name);
             data.highScores.Add(highScore.score);
+            data.highScoreEmails.Add(highScore.email);
             data.highScorePhoneNumber.Add(highScore.phoneNumber);
         }
         string json = JsonUtility.ToJson(data);
@@ -77,7 +83,7 @@ public class DataManager : MonoBehaviour
             HighScores = new List<HighScore>();
             for (int index = 0; index < data.highScoreNames.Count; ++index)
             {
-                HighScores.Add(new HighScore(data.highScoreNames[index], data.highScores[index], data.highScorePhoneNumber[index]));
+                HighScores.Add(new HighScore(data.highScoreNames[index], data.highScores[index], data.highScoreEmails[index], data.highScorePhoneNumber[index]));
             }
         }
         else
@@ -87,18 +93,18 @@ public class DataManager : MonoBehaviour
 
         while (HighScores.Count < 5)
         {
-            HighScores.Add(new HighScore("Player", 0, -1));
+            HighScores.Add(new HighScore("Player", 0, "Email", -1));
         }
     }
 
-    public void AddScoreToHighScores(string name, int score, int phoneNumber)
+    public void AddScoreToHighScores(string name, int score,string email, int phoneNumber)
     {
         // Tries to add this score to the high scores list. If it is not actually a high score (it doesn't beat the top 5), it does not get added.
         for (int index = 0; index < HighScores.Count; ++index)
         {
             if (score > HighScores[index].score)
             {
-                HighScores.Insert(index, new HighScore(name, score, phoneNumber));
+                HighScores.Insert(index, new HighScore(name, score, email, phoneNumber));
                 if (HighScores.Count > 5)
                 {
                     HighScores.RemoveAt(HighScores.Count - 1); // Remove last item from high scores; we only show the top 5
