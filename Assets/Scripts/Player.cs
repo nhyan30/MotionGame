@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverText;
     public int coinCollected = 0;
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!GameManager.Instance.GameStarted) return;
         HandleMovement();
