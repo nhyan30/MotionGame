@@ -17535,7 +17535,7 @@ Transform:
   m_GameObject: {fileID: 948380713}
   serializedVersion: 2
   m_LocalRotation: {x: 0.19928238, y: 0, z: 0, w: 0.97994214}
-  m_LocalPosition: {x: -0.73, y: 0.90999997, z: -3.3760002}
+  m_LocalPosition: {x: -0.5, y: 0.90999997, z: -3.3760002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17783,7 +17783,7 @@ MonoBehaviour:
   timeLeftText: {fileID: 994224411}
   gameCountdown: {fileID: 1982551549}
   gameOver: {fileID: 604406116}
-  totalTime: 999
+  totalTime: 5
   ReemyAnimator: {fileID: 1822323893}
 --- !u!4 &972862983 stripped
 Transform:
@@ -29926,6 +29926,8 @@ MonoBehaviour:
   moveSpeed: 1
   playerTransform: {fileID: 1814413479}
   coinCollected: 0
+  LimitLeft: -1
+  LimitRight: -0.5
 --- !u!54 &1615534747
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29949,7 +29951,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -30609,7 +30611,7 @@ Transform:
   m_GameObject: {fileID: 1646225510}
   serializedVersion: 2
   m_LocalRotation: {x: 0.19928238, y: 0, z: 0, w: 0.97994214}
-  m_LocalPosition: {x: -0.73, y: 0.90999997, z: -3.3760002}
+  m_LocalPosition: {x: -0.5, y: 0.90999997, z: -3.3760002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33086,7 +33088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5421523210152723013, guid: d3d58d5b3d4c9ad4ab9e36ca9819e90e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.73
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5421523210152723013, guid: d3d58d5b3d4c9ad4ab9e36ca9819e90e, type: 3}
       propertyPath: m_LocalPosition.y
