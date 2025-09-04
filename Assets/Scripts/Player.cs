@@ -10,19 +10,25 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameOverText;
+    [SerializeField] Transform playerTransform;
     public int coinCollected = 0;
 
-    private void Update()
-    {
-        if (!GameManager.Instance.GameStarted) return;
-        HandleMovement();
-        UpdateVisual();
-    }
+    
 
     private void Awake()
     {
         Instance = this;
     }
+
+    private void Update()
+    {
+        if (!GameManager.Instance.GameStarted) return;
+        HandleMovement();
+        transform.position += transform.forward * Time.deltaTime * moveSpeed;
+
+        UpdateVisual();
+    }
+
 
     private void HandleMovement()
     {
@@ -40,9 +46,9 @@ public class Player : MonoBehaviour
 
         inputVector = inputVector.normalized;
 
-        Vector3 moveDir = new Vector3(inputVector.x, 0, 1);
+        Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        transform.position += moveDir * Time.deltaTime * moveSpeed;
+        playerTransform.position += moveDir * Time.deltaTime * moveSpeed;
         //Debug.Log(moveDir);
     }
 
@@ -72,6 +78,11 @@ public class Player : MonoBehaviour
         Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
 
         DataManager.Instance.SaveHighScores();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("collision Detected!");
     }
 
 }

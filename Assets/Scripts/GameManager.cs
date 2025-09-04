@@ -26,19 +26,14 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        gameCountdown.gameObject.SetActive(true);
 
         Time.timeScale = 0f;  // Pause the game at start
         GameStarted = false;
 
-        animator.updateMode = AnimatorUpdateMode.UnscaledTime; //Animators are affected by Time.timeScale
+        animator.updateMode = AnimatorUpdateMode.UnscaledTime; // Animators are affected by Time.timeScale
         ReemyAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
-    private void Start()
-    {
-        StartCoroutine(StartGameCountdown());
-    }
     private void Update()
     {
         if (!GameStarted) return;
@@ -52,11 +47,12 @@ public class GameManager : MonoBehaviour
             StartCoroutine (GameEnded());
             GameStarted = false;
         }
-        
     }
 
-    IEnumerator StartGameCountdown()
+    public IEnumerator StartGameCountdown()
     {
+        gameCountdown.gameObject.SetActive(true);
+
         // Countdown: 3, 2, 1, Go!
         string[] countdown = { "3", "2", "1", "Go!" };
 
@@ -82,10 +78,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameEnded()
     {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSecondsRealtime(.3f); // unaffected by Time.timScale
         gameOver.SetActive(true);
         Time.timeScale = 0;
         Player.Instance.SaveScores();
+        yield return new WaitForSecondsRealtime(5f);
+        SceneManager.LoadScene(0);
     }
 
     public void BackToMainMenu()

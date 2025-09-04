@@ -13,7 +13,17 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private TMP_Text highScoreListNames;
     [SerializeField] private TMP_Text highScoreListScores;
+    [SerializeField] private GameObject menuList;
+    [SerializeField] private GameObject touchToStart;
 
+    bool touched = false;
+
+
+    private void Awake()
+    {
+        touchToStart.SetActive(true);
+        menuList.SetActive(false);
+    }
     void Start()
     {
         List<DataManager.HighScore> highScores = DataManager.Instance.HighScores;
@@ -21,6 +31,19 @@ public class MenuUIHandler : MonoBehaviour
         nameInput.onValueChanged.AddListener(OnNameInputChanged);
         phoneNumberInput.onValueChanged.AddListener(OnNumberInputChanged);
         startButton.interactable = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && touched == false)
+        {
+            touched = true;
+            touchToStart.SetActive(false);
+            menuList.SetActive(true);
+        }
+
+        DataManager.Instance.LoadHighScores();
+        FillInHighScoreText();
     }
 
     void OnNameInputChanged(string nameInput)
@@ -64,7 +87,9 @@ public class MenuUIHandler : MonoBehaviour
         {
             DataManager.Instance.PhoneNumber = 0; // fallback if input is invalid
         }
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        menuList.SetActive(false);
+        StartCoroutine(GameManager.Instance.StartGameCountdown());
     }
 
     public void ClearData()
@@ -93,4 +118,5 @@ public class MenuUIHandler : MonoBehaviour
         Application.Quit();
 #endif
     }
+
 }
