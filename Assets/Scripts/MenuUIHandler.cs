@@ -1,12 +1,15 @@
+using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MenuUIHandler : MonoBehaviour
 {
+    public static MenuUIHandler Instance;
     [SerializeField] private TMP_InputField nameInput;
     [SerializeField] private TMP_InputField emailInput;
     [SerializeField] private TMP_InputField phoneNumberInput;
@@ -16,13 +19,26 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private GameObject menuList;
     [SerializeField] private GameObject touchToStart;
 
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI gameOverText;
+
     bool touched = false;
 
 
+    public CanvasGroup IdleUI;
+    public CanvasGroup RegistrationUI;
+    public CanvasGroup CountdownUI;
+    public CanvasGroup GameplayUI;
+    public CanvasGroup GameOverUI;
+
+    private const string NUMBER_POPUP = "NumberPopUp";
+    [SerializeField] Animator countdownAnimator;
+    [SerializeField] TextMeshProUGUI countdownText;
+
     private void Awake()
     {
-        touchToStart.SetActive(true);
-        menuList.SetActive(false);
+        Instance = this;
+        Fade(IdleUI, true);
     }
     void Start()
     {
@@ -38,12 +54,17 @@ public class MenuUIHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && touched == false)
         {
             touched = true;
-            touchToStart.SetActive(false);
-            menuList.SetActive(true);
+            Fade(IdleUI, false, () => Fade(RegistrationUI, true));
         }
 
         DataManager.Instance.LoadHighScores();
         FillInHighScoreText();
+    }
+
+    public void UpdateVisual(int coinCollected)
+    {
+        scoreText.text = $"{coinCollected}";
+        gameOverText.text = $"Your Score : {coinCollected}";
     }
 
     void OnNameInputChanged(string nameInput)
@@ -88,10 +109,30 @@ public class MenuUIHandler : MonoBehaviour
             DataManager.Instance.PhoneNumber = 0; // fallback if input is invalid
         }
         //SceneManager.LoadScene(1);
-        menuList.SetActive(false);
-        StartCoroutine(GameManager.Instance.StartGameCountdown());
-    }
+        Fade(RegistrationUI, false, () =>
+        {
+            StartCoroutine(StartGameCountdown());
+        });
 
+    }
+    public IEnumerator StartGameCountdown()
+    {
+        Fade(CountdownUI, true);
+
+        // Countdown: 3, 2, 1, Go!
+        string[] countdown = { "3", "2", "1", "Go!" };
+
+
+        foreach (string step in countdown)
+        {
+            countdownText.text = step;
+            yield return null; // so Unity proccess UI before firing the animation
+            countdownAnimator.SetTrigger(NUMBER_POPUP);
+            yield return new WaitForSecondsRealtime(1f);
+        }
+        CountdownUI.alpha = 0;
+        GameManager.Instance.StartGame();
+    }
     public void ClearData()
     {
         DataManager.Instance.HighScores.Clear();
@@ -108,7 +149,17 @@ public class MenuUIHandler : MonoBehaviour
             Debug.Log($"{hs.name} : {hs.score} : {hs.email} :  {hs.phoneNumber}");
         }
     }
-
+    void Fade(CanvasGroup canvasGroup, bool visible, UnityAction callback = null)
+    {
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.DOFade(visible ? 1 : 0, 0.3f).SetEase(Ease.InOutQuad)
+            .OnComplete(() =>
+            {
+                if (visible)
+                    canvasGroup.blocksRaycasts = true;
+                callback?.Invoke();
+            });
+    }
     public void Quit()
     {
         DataManager.Instance.SaveHighScores();

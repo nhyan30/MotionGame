@@ -1,19 +1,15 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
     [SerializeField] private float moveSpeed = 5;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI gameOverText;
     [SerializeField] Transform playerTransform;
     public int coinCollected = 0;
-
-    
+    public float LimitLeft = -1;
+    public float LimitRight = -.5f;
 
     private void Awake()
     {
@@ -26,9 +22,8 @@ public class Player : MonoBehaviour
         HandleMovement();
         transform.position += transform.forward * Time.deltaTime * moveSpeed;
 
-        UpdateVisual();
+        MenuUIHandler.Instance.UpdateVisual(coinCollected);
     }
-
 
     private void HandleMovement()
     {
@@ -48,7 +43,12 @@ public class Player : MonoBehaviour
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        playerTransform.position += moveDir * Time.deltaTime * moveSpeed;
+        var newX = playerTransform.position.x + (moveDir.x * Time.deltaTime * moveSpeed);
+
+        newX = Mathf.Max(newX, LimitLeft);
+        newX = Mathf.Min(newX, LimitRight);
+        playerTransform.position = new Vector3(newX,playerTransform.position.y, playerTransform.position.z);
+
         //Debug.Log(moveDir);
     }
 
@@ -64,12 +64,6 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(GameManager.Instance.GameEnded());
         }
-    }
-
-    private void UpdateVisual()
-    {
-        scoreText.text = $"{coinCollected}";
-        gameOverText.text = $"Your Score : {coinCollected}";
     }
 
     public void SaveScores()
