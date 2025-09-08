@@ -1,29 +1,28 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
     [SerializeField] private float moveSpeed = 5;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI gameOverText;
+    [SerializeField] Transform playerTransform;
     public int coinCollected = 0;
-
-    private Animator animator;
-    private void FixedUpdate()
-    {
-        if (!GameManager.Instance.GameStarted) return;
-        HandleMovement();
-        UpdateVisual();
-    }
+    public float LimitLeft = -1;
+    public float LimitRight = -.5f;
 
     private void Awake()
     {
         Instance = this;
-        animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (!GameManager.Instance.GameStarted) return;
+        HandleMovement();
+        transform.position += transform.forward * Time.deltaTime * moveSpeed;
+
+        MenuUIHandler.Instance.UpdateVisual(coinCollected);
     }
 
     private void HandleMovement()
@@ -42,10 +41,14 @@ public class Player : MonoBehaviour
 
         inputVector = inputVector.normalized;
 
+        Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        Vector3 moveDir = new Vector3(inputVector.x, 0, 1);
+        var newX = playerTransform.position.x + (moveDir.x * Time.deltaTime * moveSpeed);
 
-        transform.position += moveDir * Time.deltaTime * moveSpeed;
+        newX = Mathf.Max(newX, LimitLeft);
+        newX = Mathf.Min(newX, LimitRight);
+        playerTransform.position = new Vector3(newX,playerTransform.position.y, playerTransform.position.z);
+
         //Debug.Log(moveDir);
     }
 
@@ -63,18 +66,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void UpdateVisual()
-    {
-        scoreText.text = $"{coinCollected}";
-        gameOverText.text = $"Your Score : {coinCollected}";
-    }
-
     public void SaveScores()
     {
         DataManager.Instance.AddScoreToHighScores(DataManager.Instance.Name, coinCollected, DataManager.Instance.Email, DataManager.Instance.PhoneNumber);
         Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
 
         DataManager.Instance.SaveHighScores();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("collision Detected!");
     }
 
 }
