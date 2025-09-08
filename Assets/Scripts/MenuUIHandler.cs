@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -74,15 +75,26 @@ public class MenuUIHandler : MonoBehaviour
 
     public void FillInHighScoreText()
     {
-        List<DataManager.HighScore> highScores = DataManager.Instance.HighScores;
+        List<DataManager.HighScore> allScores = DataManager.Instance.HighScores;
+
+        // Sort by score descending
+        List<DataManager.HighScore> sorted = new List<DataManager.HighScore>(allScores);
+        sorted.Sort((a, b) => b.score.CompareTo(a.score));
+
         string names = "";
         string scores = "";
-        int index = 1;
-        foreach (DataManager.HighScore highScoreData in highScores)
+        //int index = 1;
+        //foreach (DataManager.HighScore highScoreData in highScores)
+        //{
+        //    names += $"{index.ToString()}. {highScoreData.name}\n";
+        //    scores += $"{highScoreData.score.ToString()}\n";
+        //    ++index;
+        //}
+
+        for (int i = 0; i < Mathf.Min(5, sorted.Count); i++)
         {
-            names += $"{index.ToString()}. {highScoreData.name}\n";
-            scores += $"{highScoreData.score.ToString()}\n";
-            ++index;
+            names += $"{(i + 1).ToString()}. {sorted[i].name}\n";
+            scores += $"{sorted[i].score}\n";
         }
         highScoreListNames.text = names;
         highScoreListScores.text = scores;

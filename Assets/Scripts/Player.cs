@@ -75,12 +75,7 @@ public class Player : MonoBehaviour
         DataManager.Instance.SaveHighScores();
         MenuUIHandler.Instance.FillInHighScoreText();
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collision Detected!");
-    }
-
+    
     internal void SetRunningState(bool isEnabled)
     {
         animator.SetBool("Running", isEnabled);
