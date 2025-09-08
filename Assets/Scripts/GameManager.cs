@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float totalTime = 10f; // 60 seconds 
 
     [SerializeField] Animator animator;
+    [SerializeField] Animator playerAnimator;
     public Animator ReemyAnimator;
     float elapsedTime = 0f;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
 
         animator.updateMode = AnimatorUpdateMode.UnscaledTime; //Animators are affected by Time.timeScale
         ReemyAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     private void Start()
@@ -49,10 +51,10 @@ public class GameManager : MonoBehaviour
 
         if (elapsedTime >= totalTime)
         {
-            StartCoroutine (GameEnded());
+            StartCoroutine(GameEnded());
             GameStarted = false;
         }
-        
+
     }
 
     IEnumerator StartGameCountdown()
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0f;
         GameStarted = true;
         Time.timeScale = 1f;
+        playerAnimator.SetBool("Running", true);
     }
 
     public IEnumerator GameEnded()
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
         gameOver.SetActive(true);
         Time.timeScale = 0;
         Player.Instance.SaveScores();
+        playerAnimator.SetBool("Running", false);
     }
 
     public void BackToMainMenu()

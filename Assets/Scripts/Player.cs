@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverText;
     public int coinCollected = 0;
 
+    private Animator animator;
     private void FixedUpdate()
     {
         if (!GameManager.Instance.GameStarted) return;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        animator = GetComponent<Animator>();
     }
 
     private void HandleMovement()
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
 
 
         inputVector = inputVector.normalized;
+
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, 1);
 
