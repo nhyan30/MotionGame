@@ -66,7 +66,9 @@ public class DataManager : MonoBehaviour
             data.highScorePhoneNumber.Add(highScore.phoneNumber);
         }
         string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        string path = Application.persistentDataPath + "/savefile.json";
+        Debug.Log(path);
+        File.WriteAllText(path, json);
     }
 
     public void LoadHighScores()
@@ -97,7 +99,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void AddScoreToHighScores(string name, int score,string email, int phoneNumber)
+    public void AddScoreToHighScores(string name, int score, string email, int phoneNumber)
     {
         // Tries to add this score to the high scores list. If it is not actually a high score (it doesn't beat the top 5), it does not get added.
         for (int index = 0; index < HighScores.Count; ++index)

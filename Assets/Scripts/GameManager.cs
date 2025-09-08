@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameCountdown;
     [SerializeField] GameObject gameOver;
     [SerializeField] float totalTime = 10f; // 60 seconds 
-
+    public float GameEndedTimeOut=5;
     public Animator ReemyAnimator;
     float elapsedTime = 0f;
 
@@ -44,14 +44,17 @@ public class GameManager : MonoBehaviour
     {
         elapsedTime = 0f;
         GameStarted = true;
+        Player.Instance.SetRunningState(true);
     }
 
     public IEnumerator GameEnded()
     {
+        MenuUIHandler.Instance.ShowLeaderboard();
+        Player.Instance.SetRunningState(false);
         yield return new WaitForSecondsRealtime(.3f); // unaffected by Time.timScale
         gameOver.SetActive(true);
         Player.Instance.SaveScores();
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(GameEndedTimeOut);
         SceneManager.LoadScene(0);
     }
 

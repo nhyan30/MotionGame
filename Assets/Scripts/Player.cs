@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,14 +7,14 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
 
     [SerializeField] private float moveSpeed = 5;
-    [SerializeField] Transform playerTransform;
     public int coinCollected = 0;
     public float LimitLeft = -1;
     public float LimitRight = -.5f;
-
+    internal Animator animator;
     private void Awake()
     {
         Instance = this;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -43,11 +44,11 @@ public class Player : MonoBehaviour
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        var newX = playerTransform.position.x + (moveDir.x * Time.deltaTime * moveSpeed);
+        var newX = transform.position.x + (moveDir.x * Time.deltaTime * moveSpeed);
 
         newX = Mathf.Max(newX, LimitLeft);
         newX = Mathf.Min(newX, LimitRight);
-        playerTransform.position = new Vector3(newX,playerTransform.position.y, playerTransform.position.z);
+        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
 
         //Debug.Log(moveDir);
     }
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
         Debug.Log($"Score: {coinCollected} ,Name: {DataManager.Instance.Name} ,Email: {DataManager.Instance.Email} ,Phone number: {DataManager.Instance.PhoneNumber}");
 
         DataManager.Instance.SaveHighScores();
+        MenuUIHandler.Instance.FillInHighScoreText();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -79,4 +81,8 @@ public class Player : MonoBehaviour
         Debug.Log("collision Detected!");
     }
 
+    internal void SetRunningState(bool isEnabled)
+    {
+        animator.SetBool("Running", isEnabled);
+    }
 }

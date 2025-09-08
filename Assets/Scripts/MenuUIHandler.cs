@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,19 +18,16 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private TMP_Text highScoreListNames;
     [SerializeField] private TMP_Text highScoreListScores;
     [SerializeField] private GameObject menuList;
-    [SerializeField] private GameObject touchToStart;
+    [SerializeField] private Button touchToStartButton;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameOverText;
-
-    bool touched = false;
-
 
     public CanvasGroup IdleUI;
     public CanvasGroup RegistrationUI;
     public CanvasGroup CountdownUI;
     public CanvasGroup GameplayUI;
-    public CanvasGroup GameOverUI;
+    public CanvasGroup LeaderboardUI;
 
     private const string NUMBER_POPUP = "NumberPopUp";
     [SerializeField] Animator countdownAnimator;
@@ -47,18 +45,14 @@ public class MenuUIHandler : MonoBehaviour
         nameInput.onValueChanged.AddListener(OnNameInputChanged);
         phoneNumberInput.onValueChanged.AddListener(OnNumberInputChanged);
         startButton.interactable = false;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && touched == false)
+        startButton.onClick.AddListener(() =>
         {
-            touched = true;
+            Fade(RegistrationUI, false, StartGame);
+        });
+        touchToStartButton.onClick.AddListener(() =>
+        {
             Fade(IdleUI, false, () => Fade(RegistrationUI, true));
-        }
-
-        DataManager.Instance.LoadHighScores();
-        FillInHighScoreText();
+        });
     }
 
     public void UpdateVisual(int coinCollected)
@@ -78,7 +72,7 @@ public class MenuUIHandler : MonoBehaviour
         startButton.interactable = !string.IsNullOrWhiteSpace(phoneNumberInput);
     }
 
-    void FillInHighScoreText()
+    public void FillInHighScoreText()
     {
         List<DataManager.HighScore> highScores = DataManager.Instance.HighScores;
         string names = "";
@@ -132,6 +126,7 @@ public class MenuUIHandler : MonoBehaviour
         }
         CountdownUI.alpha = 0;
         GameManager.Instance.StartGame();
+        Fade(GameplayUI, true);
     }
     public void ClearData()
     {
@@ -170,4 +165,8 @@ public class MenuUIHandler : MonoBehaviour
 #endif
     }
 
+    internal void ShowLeaderboard()
+    {
+        Fade(GameplayUI,false,()=>Fade(LeaderboardUI, true,GameOverUI.Instance.StartStarsAnimation));
+    }
 }
