@@ -83,13 +83,6 @@ public class MenuUIHandler : MonoBehaviour
 
         string names = "";
         string scores = "";
-        //int index = 1;
-        //foreach (DataManager.HighScore highScoreData in highScores)
-        //{
-        //    names += $"{index.ToString()}. {highScoreData.name}\n";
-        //    scores += $"{highScoreData.score.ToString()}\n";
-        //    ++index;
-        //}
 
         for (int i = 0; i < Mathf.Min(5, sorted.Count); i++)
         {
@@ -114,7 +107,6 @@ public class MenuUIHandler : MonoBehaviour
         {
             DataManager.Instance.PhoneNumber = 0; // fallback if input is invalid
         }
-        //SceneManager.LoadScene(1);
         Fade(RegistrationUI, false, () =>
         {
             StartCoroutine(StartGameCountdown());
@@ -127,7 +119,6 @@ public class MenuUIHandler : MonoBehaviour
 
         // Countdown: 3, 2, 1, Go!
         string[] countdown = { "3", "2", "1", "Go!" };
-
 
         foreach (string step in countdown)
         {

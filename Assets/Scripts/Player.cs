@@ -6,22 +6,39 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
 
-    [SerializeField] private float moveSpeed = 5;
+    [Header("Movement Settings")]
+    [SerializeField] private float baseSpeed = 1f; // normal speed
+    [SerializeField] private float recoveryAcceleration = 0.4f; // how fast speed recovers
+    [SerializeField] private float obstacleSlowSpeed = 0.4f;    // reduced speed when hit
+
+    private float currentSpeed; // runtime speed
+
     public int coinCollected = 0;
     public float LimitLeft = -1;
     public float LimitRight = -.5f;
     internal Animator animator;
+
     private void Awake()
     {
         Instance = this;
         animator = GetComponent<Animator>();
+
+        currentSpeed = baseSpeed;
     }
 
     private void Update()
     {
         if (!GameManager.Instance.GameStarted) return;
         HandleMovement();
-        transform.position += transform.forward * Time.deltaTime * moveSpeed;
+
+        // Smooth speed transition 
+        currentSpeed = Mathf.MoveTowards(currentSpeed, baseSpeed, recoveryAcceleration * Time.deltaTime);
+
+        transform.position += transform.forward * Time.deltaTime * currentSpeed;
+
+        // Update Blend Tree parameter
+        float speedRatio = currentSpeed / baseSpeed; 
+        animator.SetFloat("Speed", speedRatio);
 
         MenuUIHandler.Instance.UpdateVisual(coinCollected);
     }
@@ -44,7 +61,7 @@ public class Player : MonoBehaviour
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        var newX = transform.position.x + (moveDir.x * Time.deltaTime * moveSpeed);
+        var newX = transform.position.x + (moveDir.x * Time.deltaTime * baseSpeed);
 
         newX = Mathf.Max(newX, LimitLeft);
         newX = Mathf.Min(newX, LimitRight);
@@ -55,16 +72,23 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Coin")
+        if (other.CompareTag("Coin"))
         {
-            other.gameObject.SetActive(false);
             coinCollected++;
+
+            Destroy(other.gameObject);
             //Debug.Log(coinCollected);
         }
-        if(other.gameObject.tag == "FinishLine")
+        if (other.CompareTag("FinishLine"))
         {
             //StartCoroutine(GameManager.Instance.GameEnded());
         }
+    }
+
+    public void OnObstacleHit()
+    {
+        // Drop speed immediately
+        currentSpeed = obstacleSlowSpeed;
     }
 
     public void SaveScores()

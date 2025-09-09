@@ -65,7 +65,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateVisual()
     {
-        float timeRemaining = Mathf.Clamp(totalTime - elapsedTime, 0, totalTime);
-        timeLeftText.text = $"{timeRemaining:F0}";
+        //float timeRemaining = Mathf.Clamp(totalTime - elapsedTime, 0, totalTime); // top down Timer
+
+        int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+        int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+
+        timeLeftText.text = $"{minutes:00}:{seconds:00}";
     }
 }

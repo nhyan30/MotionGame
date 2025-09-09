@@ -10,10 +10,9 @@ public class FlashEffect : MonoBehaviour
 
     public bool isFlashing = false;
 
-    private Color originalColor;
-
     private void Awake()
     {
+        material.SetColor("_EmissionColor", Color.black);
     }
 
     private IEnumerator DoFlash()
@@ -50,6 +49,7 @@ public class FlashEffect : MonoBehaviour
         {
             Debug.Log("collision Detected!");
             Flash();
+            Player.Instance.OnObstacleHit();
         }
     }
 }

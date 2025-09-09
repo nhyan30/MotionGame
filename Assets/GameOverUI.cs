@@ -12,7 +12,7 @@ public class GameOverUI : MonoBehaviour
     public float floatingDuration = 2;
     public float rotationDuration = 2;
     public float rotationOffset = 10;
-    public Transform CubeSample;
+    //public Transform CubeSample;
     private void Awake()
     {
         Instance = this;

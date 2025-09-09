@@ -93,29 +93,10 @@ public class DataManager : MonoBehaviour
         {
             HighScores = new List<HighScore>();
         }
-
-        //while (HighScores.Count < 5)
-        //{
-        //    HighScores.Add(new HighScore("Player", 0, "Email", -1));
-        //}
     }
 
     public void AddScoreToHighScores(string name, int score, string email, int phoneNumber)
     {
         HighScores.Add(new HighScore(name, score, email, phoneNumber));
-
-        //// Tries to add this score to the high scores list. If it is not actually a high score (it doesn't beat the top 5), it does not get added.
-        //for (int index = 0; index < HighScores.Count; ++index)
-        //{
-        //    if (score > HighScores[index].score)
-        //    {
-        //        HighScores.Insert(index, new HighScore(name, score, email, phoneNumber));
-        //        if (HighScores.Count > 5)
-        //        {
-        //            HighScores.RemoveAt(HighScores.Count - 1); // Remove last item from high scores; we only show the top 5
-        //        }
-        //        break;
-        //    }
-        //}
     }
 }

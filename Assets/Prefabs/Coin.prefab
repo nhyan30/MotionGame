@@ -123,4 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6962175fde5f244aa88c3eda419cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 200
+  rotationSpeed: 150
+  destroyDistance: 3
+  player: {fileID: 919132149155446097, guid: e3cbda9045cdcd94dbe241cd62bbc629, type: 3}
