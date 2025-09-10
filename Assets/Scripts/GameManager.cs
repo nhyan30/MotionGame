@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     float elapsedTime = 0f;
 
     public bool GameStarted { get; private set; } = false;
+    public bool isGameEnded { get; private set; } = false;
+    public Transform finishLookTarget;
 
     private void Awake()
     {
@@ -33,12 +35,12 @@ public class GameManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         UpdateVisual();
+    }
 
-        if (elapsedTime >= totalTime)
-        {
-            StartCoroutine(GameEnded());
-            GameStarted = false;
-        }
+    public void FinishGame()
+    {
+        StartCoroutine(GameEnded());
+        isGameEnded = true;
     }
     public void StartGame()
     {
@@ -49,12 +51,22 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameEnded()
     {
-        MenuUIHandler.Instance.ShowLeaderboard();
+        yield return new WaitForSeconds(2f);
+
         Player.Instance.SetRunningState(false);
-        yield return new WaitForSecondsRealtime(.3f); // unaffected by Time.timScale
-        gameOver.SetActive(true);
+
+        Player.Instance.transform
+            .DOLookAt(finishLookTarget.position, .3f) 
+            .OnComplete(() =>
+            {
+                Player.Instance.SetWinningState(true);
+            });
+
+        yield return new WaitForSeconds(4f);
+
+        MenuUIHandler.Instance.ShowLeaderboard();
         Player.Instance.SaveScores();
-        yield return new WaitForSecondsRealtime(GameEndedTimeOut);
+        yield return new WaitForSeconds(GameEndedTimeOut);
         SceneManager.LoadScene(0);
     }
 

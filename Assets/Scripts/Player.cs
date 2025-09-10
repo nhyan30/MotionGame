@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public float LimitLeft = -1;
     public float LimitRight = -.5f;
     internal Animator animator;
+    private float externalInputX = 0f;
+
 
     private void Awake()
     {
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour
         HandleMovement();
 
         // Smooth speed transition 
-        currentSpeed = Mathf.MoveTowards(currentSpeed, baseSpeed, recoveryAcceleration * Time.deltaTime);
+        currentSpeed = Mathf.MoveTowards(currentSpeed, GameManager.Instance.isGameEnded?0:baseSpeed, recoveryAcceleration * Time.deltaTime);
 
         transform.position += transform.forward * Time.deltaTime * currentSpeed;
 
@@ -70,6 +72,11 @@ public class Player : MonoBehaviour
         //Debug.Log(moveDir);
     }
 
+    public void SetKinectInput(float x)
+    {
+        externalInputX = Mathf.Clamp(x, -1f, 1f);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Coin"))
@@ -81,7 +88,7 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("FinishLine"))
         {
-            //StartCoroutine(GameManager.Instance.GameEnded());
+            GameManager.Instance.FinishGame();
         }
     }
 
@@ -103,5 +110,9 @@ public class Player : MonoBehaviour
     internal void SetRunningState(bool isEnabled)
     {
         animator.SetBool("Running", isEnabled);
+    }
+    internal void SetWinningState(bool isEnabled)
+    {
+        animator.SetBool("Winning", isEnabled);
     }
 }
