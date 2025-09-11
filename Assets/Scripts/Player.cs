@@ -111,6 +111,8 @@ public class Player : MonoBehaviour
     {
         animator.SetBool("Running", isEnabled);
     }
+    
+
     internal void SetWinningState(bool isEnabled)
     {
         animator.SetBool("Winning", isEnabled);
