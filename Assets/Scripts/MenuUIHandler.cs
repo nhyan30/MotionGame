@@ -115,6 +115,7 @@ public class MenuUIHandler : MonoBehaviour
     }
     public IEnumerator StartGameCountdown()
     {
+        GameManager.Instance.cam1.Priority = 2;
         Fade(CountdownUI, true);
 
         // Countdown: 3, 2, 1, Go!
