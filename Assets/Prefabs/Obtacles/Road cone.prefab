@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3687002672244122597}
   - component: {fileID: 4682323893075330461}
   - component: {fileID: 2359842230517547174}
-  - component: {fileID: 3881554453862710164}
+  - component: {fileID: 6254659631421575980}
   m_Layer: 0
   m_Name: Road cone
   m_TagString: Obstacle
@@ -118,8 +118,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3881554453862710164
-BoxCollider:
+--- !u!136 &6254659631421575980
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,6 +136,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.07319999, y: 0.14899999, z: 0.07319999}
+  serializedVersion: 2
+  m_Radius: 0.036599994
+  m_Height: 0.14899999
+  m_Direction: 1
   m_Center: {x: -0.6681362, y: 0.074499995, z: 0.8556675}

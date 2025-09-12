@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using TMPro;
 using UnityEngine;
@@ -7,9 +8,9 @@ public class Player : MonoBehaviour
     public static Player Instance { get; private set; }
 
     [Header("Movement Settings")]
-    [SerializeField] private float baseSpeed = 1f; // normal speed
+    [SerializeField] private Vector2 baseSpeed = new Vector2(1,1); // normal speed
     [SerializeField] private float recoveryAcceleration = 0.4f; // how fast speed recovers
-    [SerializeField] private float obstacleSlowSpeed = 0.4f;    // reduced speed when hit
+    [SerializeField] private float obstacleSlowSpeed = 0.2f;    // reduced speed when hit
 
     private float currentSpeed; // runtime speed
 
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
         Instance = this;
         animator = GetComponent<Animator>();
 
-        currentSpeed = baseSpeed;
+        currentSpeed = baseSpeed.y;
     }
 
     private void Update()
@@ -34,12 +35,12 @@ public class Player : MonoBehaviour
         HandleMovement();
 
         // Smooth speed transition 
-        currentSpeed = Mathf.MoveTowards(currentSpeed, GameManager.Instance.isGameEnded?0:baseSpeed, recoveryAcceleration * Time.deltaTime);
+        currentSpeed = Mathf.MoveTowards(currentSpeed, GameManager.Instance.isGameEnded ? 0 : baseSpeed.y, recoveryAcceleration * Time.deltaTime);
 
         transform.position += transform.forward * Time.deltaTime * currentSpeed;
 
         // Update Blend Tree parameter
-        float speedRatio = currentSpeed / baseSpeed; 
+        float speedRatio = currentSpeed / baseSpeed.y; 
         animator.SetFloat("Speed", speedRatio);
 
         MenuUIHandler.Instance.UpdateVisual(coinCollected);
@@ -63,8 +64,8 @@ public class Player : MonoBehaviour
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
 
-        var newX = transform.position.x + (moveDir.x * Time.deltaTime * baseSpeed);
-
+        var newX = transform.position.x + (moveDir.x * Time.deltaTime * baseSpeed.x);
+            
         newX = Mathf.Max(newX, LimitLeft);
         newX = Mathf.Min(newX, LimitRight);
         transform.position = new Vector3(newX, transform.position.y, transform.position.z);
@@ -96,6 +97,8 @@ public class Player : MonoBehaviour
     {
         // Drop speed immediately
         currentSpeed = obstacleSlowSpeed;
+        animator.SetLayerWeight(1, 1);
+        DOVirtual.DelayedCall(1f, () => animator.SetLayerWeight(1, 0));
     }
 
     public void SaveScores()
@@ -116,5 +119,9 @@ public class Player : MonoBehaviour
     internal void SetWinningState(bool isEnabled)
     {
         animator.SetBool("Winning", isEnabled);
+    }
+    internal void SetHittingState()
+    {
+        animator.SetTrigger("Hit");
     }
 }

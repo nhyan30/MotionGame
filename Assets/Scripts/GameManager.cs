@@ -2,11 +2,13 @@ using System.Collections;
 using DG.Tweening;
 using GLTFast.Schema;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
     public static GameManager Instance { get; private set; }
 
     [SerializeField] TextMeshProUGUI timeLeftText;
@@ -20,12 +22,18 @@ public class GameManager : MonoBehaviour
     public bool GameStarted { get; private set; } = false;
     public bool isGameEnded { get; private set; } = false;
     public Transform finishLookTarget;
+    public CinemachineCamera cam1;
+    public CinemachineCamera cam2;
 
     private void Awake()
     {
         Instance = this;
 
         GameStarted = false;
+    }
+
+    private void Start()
+    {
     }
 
     private void Update()
@@ -44,6 +52,8 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
+        cam1.Priority = 2;
+
         elapsedTime = 0f;
         GameStarted = true;
         Player.Instance.SetRunningState(true);

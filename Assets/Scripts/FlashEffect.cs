@@ -17,6 +17,8 @@ public class FlashEffect : MonoBehaviour
 
     private IEnumerator DoFlash()
     {
+        Player.Instance.SetHittingState();
+
         isFlashing = true;
         float elapsedTime = 0f;
         while (elapsedTime < totalFlashTime)

@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1584736095691036767}
   - component: {fileID: 7908410604582894785}
-  - component: {fileID: 3179034641674226083}
+  - component: {fileID: 7810609185057840783}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Obstacle
@@ -320,7 +320,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3179034641674226083
+--- !u!65 &7810609185057840783
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,8 +339,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.22857332, y: 0.15044135, z: 0.0802021}
-  m_Center: {x: 0.019142509, y: 0.03564772, z: -0.005030632}
+  m_Size: {x: 0.19364762, y: 0.1745196, z: 0.02}
+  m_Center: {x: 0.019046009, y: 0.048478693, z: 0}
 --- !u!1 &2375467405218307950
 GameObject:
   m_ObjectHideFlags: 0
