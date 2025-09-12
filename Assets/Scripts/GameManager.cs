@@ -95,6 +95,6 @@ public class GameManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(elapsedTime / 60f);
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-        timeLeftText.text = $"<mspace=0.6em>{minutes:00}:{seconds:00}";
+        timeLeftText.text = $"<mspace=0.6em>{minutes:00}<mspace=0.4em>:</mspace>{seconds:00}";
     }
 }
