@@ -55,12 +55,14 @@ public class GameManager : MonoBehaviour
 
         Player.Instance.SetRunningState(false);
 
-        Player.Instance.transform
-            .DOLookAt(finishLookTarget.position, .3f) 
-            .OnComplete(() =>
-            {
-                Player.Instance.SetWinningState(true);
-            });
+        //Player.Instance.transform
+        //    .DOLookAt(finishLookTarget.position, .3f) 
+        //    .OnComplete(() =>
+        //    {
+        //        Player.Instance.SetWinningState(true);
+        //    });
+
+
 
         yield return new WaitForSeconds(4f);
 
@@ -77,11 +79,12 @@ public class GameManager : MonoBehaviour
 
     private void UpdateVisual()
     {
-        //float timeRemaining = Mathf.Clamp(totalTime - elapsedTime, 0, totalTime); // top down Timer
+        if(isGameEnded) return;
 
+        //float timeRemaining = Mathf.Clamp(totalTime - elapsedTime, 0, totalTime); // top down Timer
         int minutes = Mathf.FloorToInt(elapsedTime / 60f);
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-        timeLeftText.text = $"{minutes:00}:{seconds:00}";
+        timeLeftText.text = $"<mspace=0.6em>{minutes:00}:{seconds:00}";
     }
 }
