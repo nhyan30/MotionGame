@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-        cam1.Priority = 2;
 
         elapsedTime = 0f;
         GameStarted = true;
