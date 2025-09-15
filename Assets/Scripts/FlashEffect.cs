@@ -49,7 +49,7 @@ public class FlashEffect : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle" && !isFlashing)
         {
-            Debug.Log("collision Detected!");
+            //Debug.Log("collision Detected!");
             Flash();
             Player.Instance.OnObstacleHit();
         }

@@ -17,7 +17,7 @@ public class CoinScript : MonoBehaviour
     
     void Update()
     {
-        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
         if (player.transform.position.z - transform.position.z > destroyDistance)
         {
