@@ -17436,7 +17436,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384631346}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 1
@@ -101337,7 +101337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5574436814744225544, guid: 90671381c9fccac4ba659745a228561e, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6022699144771344493, guid: 90671381c9fccac4ba659745a228561e, type: 3}
       propertyPath: m_VerticalAlignment
