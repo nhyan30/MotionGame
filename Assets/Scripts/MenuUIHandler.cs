@@ -148,7 +148,7 @@ public class MenuUIHandler : MonoBehaviour
             Debug.Log($"{hs.name} : {hs.score} : {hs.email} :  {hs.phoneNumber}");
         }
     }
-    void Fade(CanvasGroup canvasGroup, bool visible, UnityAction callback = null)
+    public void Fade(CanvasGroup canvasGroup, bool visible, UnityAction callback = null)
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.DOFade(visible ? 1 : 0, 0.3f).SetEase(Ease.InOutQuad)

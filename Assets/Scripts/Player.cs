@@ -114,7 +114,6 @@ public class Player : MonoBehaviour
     {
         animator.SetBool("Running", isEnabled);
     }
-    
 
     internal void SetWinningState(bool isEnabled)
     {
@@ -123,5 +122,10 @@ public class Player : MonoBehaviour
     internal void SetHittingState()
     {
         animator.SetTrigger("Hit");
+    }
+
+    public void DeductCoin(int amount)
+    {
+        coinCollected = Mathf.Max(0, coinCollected - amount);
     }
 }
