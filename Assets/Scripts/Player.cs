@@ -20,11 +20,16 @@ public class Player : MonoBehaviour
     internal Animator animator;
     private float externalInputX = 0f;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip coinCollectSound;
+    [SerializeField] AudioClip stumbleSound;
+
 
     private void Awake()
     {
         Instance = this;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         currentSpeed = baseSpeed.y;
     }
@@ -82,6 +87,7 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
+            audioSource.PlayOneShot(coinCollectSound);
             coinCollected++;
 
             Destroy(other.gameObject);
@@ -95,6 +101,7 @@ public class Player : MonoBehaviour
 
     public void OnObstacleHit()
     {
+        audioSource.PlayOneShot(stumbleSound);
         // Drop speed immediately
         currentSpeed = obstacleSlowSpeed;
         animator.SetLayerWeight(1, 1);
