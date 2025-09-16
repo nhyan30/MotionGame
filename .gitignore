@@ -83,3 +83,6 @@ crashlytics-build.properties
 
 # Ignore all onnx files
 *.onnx
+
+# Ignore all DLL files
+*.dll
