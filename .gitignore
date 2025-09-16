@@ -81,5 +81,5 @@ crashlytics-build.properties
 # Ignore Azure Kinect Examples folder
 /Assets/AzureKinectExamples/
 
-# Ignore all DLL files
-*.dll
+# Ignore all onnx files
+*.onnx
