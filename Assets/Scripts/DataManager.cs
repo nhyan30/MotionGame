@@ -93,6 +93,11 @@ public class DataManager : MonoBehaviour
         {
             HighScores = new List<HighScore>();
         }
+
+        while (HighScores.Count < 5)
+        {
+            HighScores.Add(new HighScore("Player", 0, "Email", 00));
+        }
     }
 
     public void AddScoreToHighScores(string name, int score, string email, int phoneNumber)
