@@ -1390,6 +1390,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3561243932189405190, guid: e9cec1ce0c957e1488f59748947c4b10, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3561243932189405190, guid: e9cec1ce0c957e1488f59748947c4b10, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4538980693510985160, guid: e9cec1ce0c957e1488f59748947c4b10, type: 3}
       propertyPath: m_Name
       value: StreetTurn (4)
