@@ -58,7 +58,8 @@ public class MenuUIHandler : MonoBehaviour
 
     public void UpdateVisual(int coinCollected)
     {
-        scoreText.text = $"{coinCollected}";
+        string formattedScore = coinCollected.ToString("D3");
+        scoreText.text = $"<mspace=0.6em>{formattedScore}";
         gameOverText.text = $"Your Score : {coinCollected}";
     }
 
@@ -87,7 +88,7 @@ public class MenuUIHandler : MonoBehaviour
         for (int i = 0; i < Mathf.Min(5, sorted.Count); i++)
         {
             names += $"{(i + 1).ToString()}. {sorted[i].name}\n";
-            scores += $"{sorted[i].score}\n";
+            scores += $"{sorted[i].score.ToString("D3")}\n";
         }
         highScoreListNames.text = names;
         highScoreListScores.text = scores;

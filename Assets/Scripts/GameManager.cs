@@ -25,15 +25,15 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera cam1;
     public CinemachineCamera cam2;
 
+    public ParticleSystem confetti;
+
     private void Awake()
     {
         Instance = this;
 
         GameStarted = false;
-    }
 
-    private void Start()
-    {
+        confetti.Stop();
     }
 
     private void Update()
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameEnded()
     {
+        confetti.Play();
         yield return new WaitForSeconds(2f);
 
         Player.Instance.SetRunningState(false);
@@ -70,8 +71,6 @@ public class GameManager : MonoBehaviour
         //    {
         //        Player.Instance.SetWinningState(true);
         //    });
-
-
 
         yield return new WaitForSeconds(4f);
 
@@ -94,6 +93,6 @@ public class GameManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(elapsedTime / 60f);
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
-        timeLeftText.text = $"<mspace=0.6em>{minutes:00}<mspace=0.4em>:</mspace>{seconds:00}";
+        timeLeftText.text = $"<mspace=0.6em>{minutes:00}<mspace=0.4em>:<mspace=0.6em>{seconds:00}<mspace=0.4em>";
     }
 }

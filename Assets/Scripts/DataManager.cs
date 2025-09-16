@@ -96,7 +96,7 @@ public class DataManager : MonoBehaviour
 
         while (HighScores.Count < 5)
         {
-            HighScores.Add(new HighScore("Player", 0, "Email", 00));
+            HighScores.Add(new HighScore("", 0, "Email", 0));
         }
     }
 
