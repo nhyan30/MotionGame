@@ -3,27 +3,30 @@ using UnityEngine;
 public class KinectInput : MonoBehaviour
 {
     public Player player;
+    public Transform UCharacter;
+    public float sensitivity = 2f;    // adjust scaling of movement
+    private float centerX = 0f;       // neutral center position
+
+
+    private void Start()
+    {
+        if (UCharacter != null)
+        {
+            // Calibrate: take initial X as the neutral center
+            centerX = UCharacter.position.x;
+        }
+    }
 
     void Update()
     {
         if (!GameManager.Instance.GameStarted) return;
+        if (UCharacter == null) return;
 
-        // Example pseudo input from Kinect
-        // Replace with your actual Azure Kinect SDK code
-        float kinectX = 0f;
+        // Calculate offset from center
+        float offsetX = (UCharacter.position.x - centerX) * sensitivity;
 
-        // Example: if user moves right in front of sensor
-        if (Input.GetKey(KeyCode.RightArrow)) // <-- placeholder until Kinect is set up
-        {
-            kinectX = 1f;
-        }
+        float kinectX = Mathf.Clamp(offsetX, -1f, 1f);
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            kinectX = -1f;
-        }
-
-        // Send input to Player
         player.SetKinectInput(kinectX);
     }
 }

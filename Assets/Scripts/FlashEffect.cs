@@ -1,11 +1,9 @@
 using System.Collections;
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
 
 public class FlashEffect : MonoBehaviour
 {
-    [SerializeField] Material material;
+    [SerializeField] Material[] materials;
     [SerializeField] private Color emissionColor = new Color(1.3f, 1.3f, 1.3f); // Light gray
     public float flashDuration = 0.1f;   // how long each flash step lasts
     public float totalFlashTime = 2f;    // total flashing time
@@ -17,7 +15,10 @@ public class FlashEffect : MonoBehaviour
 
     private void Awake()
     {
-        material.SetColor("_EmissionColor", Color.black);
+        foreach (var mat in materials)
+        {
+            mat.SetColor("_EmissionColor", Color.black);
+        }
     }
 
     private IEnumerator DoFlash()
@@ -31,11 +32,13 @@ public class FlashEffect : MonoBehaviour
         while (elapsedTime < totalFlashTime)
         {
             // change to flash color
-            material.SetColor("_EmissionColor", emissionColor);
+            foreach (var mat in materials)
+                mat.SetColor("_EmissionColor", emissionColor);
             yield return new WaitForSeconds(flashDuration);
 
             // change back to original
-            material.SetColor("_EmissionColor", Color.black);
+            foreach (var mat in materials)
+                mat.SetColor("_EmissionColor", Color.black);
             yield return new WaitForSeconds(flashDuration);
 
             elapsedTime += flashDuration * 2f; // one full cycle = flash + normal
@@ -43,7 +46,8 @@ public class FlashEffect : MonoBehaviour
 
         //MenuUIHandler.Instance.Fade(detuctedScore, false);
         // make sure it ends with original color
-        material.SetColor("_EmissionColor", Color.black);
+        foreach (var mat in materials)
+            mat.SetColor("_EmissionColor", Color.black);
         isFlashing = false;
     }
 
