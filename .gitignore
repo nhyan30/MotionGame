@@ -78,4 +78,8 @@ crashlytics-build.properties
 .collabignore
 .DS_Store
 
+# Ignore Azure Kinect Examples folder
 /Assets/AzureKinectExamples/
+
+# Ignore all DLL files
+*.dll
