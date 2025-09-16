@@ -77,3 +77,5 @@ crashlytics-build.properties
 # Other
 .collabignore
 .DS_Store
+
+/Assets/AzureKinectExamples/
