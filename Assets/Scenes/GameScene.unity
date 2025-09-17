@@ -47645,6 +47645,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1758792940281223386, guid: a6f549f92a6d0814dbb24ffee179e15d, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758792940281223386, guid: a6f549f92a6d0814dbb24ffee179e15d, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 7d1f955097c3d9e4aad196fbddc23258, type: 3}
+    - target: {fileID: 1758792940281223386, guid: a6f549f92a6d0814dbb24ffee179e15d, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3197855572833367951, guid: a6f549f92a6d0814dbb24ffee179e15d, type: 3}
       propertyPath: m_Name
       value: Remy
@@ -104794,6 +104806,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1317223051}
     m_Modifications:
+    - target: {fileID: 797160966064905970, guid: 7a05ba6e77c6d40499f0ecb1ed10c95d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -0.102401
+      objectReference: {fileID: 0}
     - target: {fileID: 797160966064905970, guid: 7a05ba6e77c6d40499f0ecb1ed10c95d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.707
