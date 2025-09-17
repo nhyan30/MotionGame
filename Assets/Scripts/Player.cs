@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
     private float externalInputX = 0f;
 
     AudioSource audioSource;
-    [SerializeField] AudioClip coinCollectSound;
-    [SerializeField] AudioClip stumbleSound;
+    [SerializeField] AudioClip[] coinCollectSound;
+    //[SerializeField] AudioClip[] stumbleSound;
 
 
     private void Awake()
@@ -85,14 +85,16 @@ public class Player : MonoBehaviour
 
     public void SetKinectInput(float x)
     {
-        externalInputX = Mathf.Clamp(x, -1f, 1f);
+        externalInputX = x;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Coin"))
         {
-            audioSource.PlayOneShot(coinCollectSound);
+            int randomInput = UnityEngine.Random.Range(0, coinCollectSound.Length);
+            audioSource.PlayOneShot(coinCollectSound[randomInput], 1);
+
             coinCollected++;
 
             Destroy(other.gameObject);
@@ -106,7 +108,8 @@ public class Player : MonoBehaviour
 
     public void OnObstacleHit()
     {
-        audioSource.PlayOneShot(stumbleSound);
+        //int randomInput = UnityEngine.Random.Range(0, stumbleSound.Length);
+        //audioSource.PlayOneShot(stumbleSound[randomInput], 1);
         // Drop speed immediately
         currentSpeed = obstacleSlowSpeed;
         animator.SetLayerWeight(1, 1);

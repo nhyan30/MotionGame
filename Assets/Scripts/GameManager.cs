@@ -27,9 +27,13 @@ public class GameManager : MonoBehaviour
 
     public ParticleSystem confetti;
 
+    AudioSource audioSource;
+    public AudioClip WinSound;
+
     private void Awake()
     {
         Instance = this;
+        audioSource = GetComponent<AudioSource>();
 
         GameStarted = false;
 
@@ -52,16 +56,21 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
-
         elapsedTime = 0f;
         GameStarted = true;
         Player.Instance.SetRunningState(true);
+        audioSource.Play();
     }
 
     public IEnumerator GameEnded()
     {
+        audioSource.Stop();
+
         confetti.Play();
+        audioSource.PlayOneShot(WinSound);
+
         yield return new WaitForSeconds(2f);
+
 
         Player.Instance.SetRunningState(false);
 

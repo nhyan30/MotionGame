@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FlashEffect : MonoBehaviour
 {
+    public static FlashEffect Instance;
     [SerializeField] Material[] materials;
     [SerializeField] private Color emissionColor = new Color(1.3f, 1.3f, 1.3f); // Light gray
     public float flashDuration = 0.1f;   // how long each flash step lasts
@@ -11,10 +12,20 @@ public class FlashEffect : MonoBehaviour
     //public CanvasGroup detuctedScore;
     //public TextMeshProUGUI detuctedScoreText;
 
-    public bool isFlashing = false;
+    private bool _isFlashing;
+    public bool isFlashing
+    {
+        get { return _isFlashing; }
+        set
+        {
+            Debug.Log(value);
+            _isFlashing = value;
+        }
+    }
 
     private void Awake()
     {
+        Instance = this;
         foreach (var mat in materials)
         {
             mat.SetColor("_EmissionColor", Color.black);
@@ -54,6 +65,7 @@ public class FlashEffect : MonoBehaviour
     public void Flash()
     {
         StopAllCoroutines();
+        isFlashing = false;
         StartCoroutine(DoFlash());
     }
 
@@ -65,6 +77,7 @@ public class FlashEffect : MonoBehaviour
             //Debug.Log("collision Detected!");
             Flash();
             Player.Instance.OnObstacleHit();
+            collision.gameObject.GetComponent<HitSound>().PlaySound();
         }
     }
 }

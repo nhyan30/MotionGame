@@ -7,6 +7,7 @@ public class KinectInput : MonoBehaviour
 
     [Header("Settings")]
     public float sensitivity = 2f; // how much chest movement affects playe
+    public float width= 1f; 
     private float centerX = 0f; // neutral center position
 
     private void Start()
@@ -26,10 +27,10 @@ public class KinectInput : MonoBehaviour
         // Calculate offset from center
         float offsetX = (UCharacterTorso.position.x - centerX) * sensitivity;
 
-        float kinectX = Mathf.Clamp(offsetX, -1f, 1f);
+        float kinectX = Mathf.Clamp(offsetX, -width,width);
 
         player.SetKinectInput(offsetX);
 
-        Debug.Log($"Kinect X: {offsetX}");
+        //Debug.Log($"Kinect X: {offsetX}");
     }
 }
