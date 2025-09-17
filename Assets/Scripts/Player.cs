@@ -53,29 +53,34 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector2 inputVector = new Vector2(0, 0);
+        //Vector2 inputVector = new Vector2(0, 0);
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        //if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    inputVector.x = -1;
+        //}
+        //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    inputVector.x = +1;
+        //}
+        //inputVector = inputVector.normalized;
+
+        float inputX = externalInputX; // Kinect input
+
+        // if Kinect not giving input
+        if (Mathf.Approximately(inputX, 0f))
         {
-            inputVector.x = -1;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            inputVector.x = +1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) inputX = -1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) inputX = +1;
         }
 
-
-        inputVector = inputVector.normalized;
-
-        Vector3 moveDir = new Vector3(inputVector.x, 0, 0);
+        Vector3 moveDir = new Vector3(inputX, 0, 0);
 
         var newX = transform.position.x + (moveDir.x * Time.deltaTime * baseSpeed.x);
             
         newX = Mathf.Max(newX, LimitLeft);
         newX = Mathf.Min(newX, LimitRight);
         transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-
-        //Debug.Log(moveDir);
     }
 
     public void SetKinectInput(float x)
