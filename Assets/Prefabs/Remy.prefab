@@ -1192,7 +1192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8823256f791b264eac39923f8842ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 5a28f34797656af4d8bc284ac3dd7ee4, type: 2}
+  materials: []
   emissionColor: {r: 0.5377358, g: 0, b: 0, a: 0.50980395}
   flashDuration: 0.1
   totalFlashTime: 1.5

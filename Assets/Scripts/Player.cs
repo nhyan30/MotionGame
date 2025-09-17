@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
 
         float inputX = externalInputX; // Kinect input
 
-        // Fallback to keyboard if Kinect not giving input
+        // if Kinect not giving input
         if (Mathf.Approximately(inputX, 0f))
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) inputX = -1;
