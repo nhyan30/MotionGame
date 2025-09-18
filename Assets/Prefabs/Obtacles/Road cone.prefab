@@ -155,6 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ab13aed8bcdf64388ca7d1b50ce9b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  destroyDistance: 3
+  hitSound: {fileID: 8300000, guid: 76846b60ea02a75409ac0f93f67647fe, type: 3}
 --- !u!1 &6107932438958985808
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +201,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 7a0e7f75236d9524ab0568e291c389f2, type: 3}
+  m_Resource: {fileID: 8300000, guid: 76846b60ea02a75409ac0f93f67647fe, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

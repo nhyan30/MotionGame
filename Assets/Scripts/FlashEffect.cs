@@ -12,16 +12,16 @@ public class FlashEffect : MonoBehaviour
     //public CanvasGroup detuctedScore;
     //public TextMeshProUGUI detuctedScoreText;
 
-    private bool _isFlashing;
-    public bool isFlashing
-    {
-        get { return _isFlashing; }
-        set
-        {
-            Debug.Log(value);
-            _isFlashing = value;
-        }
-    }
+    public bool isFlashing;
+    //public bool isFlashing
+    //{
+    //    get { return _isFlashing; }
+    //    set
+    //    {
+    //        Debug.Log(value);
+    //        _isFlashing = value;
+    //    }
+    //}
 
     private void Awake()
     {

@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0f;
         GameStarted = true;
         Player.Instance.SetRunningState(true);
-        audioSource.Play();
     }
 
     public IEnumerator GameEnded()
@@ -103,5 +102,9 @@ public class GameManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(elapsedTime % 60f);
 
         timeLeftText.text = $"<mspace=0.6em>{minutes:00}<mspace=0.4em>:<mspace=0.6em>{seconds:00}<mspace=0.4em>";
+    }
+    public void StartGameMusic()
+    {
+        audioSource.Play();
     }
 }

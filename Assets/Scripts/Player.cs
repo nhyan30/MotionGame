@@ -21,8 +21,11 @@ public class Player : MonoBehaviour
     private float externalInputX = 0f;
 
     AudioSource audioSource;
-    [SerializeField] AudioClip[] coinCollectSound;
-    //[SerializeField] AudioClip[] stumbleSound;
+    [SerializeField] AudioClip coinCollectSound;
+    [SerializeField] float pitchStep = 0.1f; // how much pitch increases per coin in a group
+    [SerializeField] int groupSize = 3; 
+    public int coinComboCounter = 0;
+    public float soundPitch = 1.3f;
 
 
     private void Awake()
@@ -32,6 +35,7 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         currentSpeed = baseSpeed.y;
+        audioSource.pitch = soundPitch;
     }
 
     private void Update()
@@ -53,17 +57,6 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        //Vector2 inputVector = new Vector2(0, 0);
-
-        //if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        //{
-        //    inputVector.x = -1;
-        //}
-        //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    inputVector.x = +1;
-        //}
-        //inputVector = inputVector.normalized;
 
         float inputX = externalInputX; // Kinect input
 
@@ -92,8 +85,9 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
-            int randomInput = UnityEngine.Random.Range(0, coinCollectSound.Length);
-            audioSource.PlayOneShot(coinCollectSound[randomInput], 1);
+            //int randomInput = UnityEngine.Random.Range(0, coinCollectSound.Length);
+            //audioSource.PlayOneShot(coinCollectSound[randomInput], 1);
+            PlayCoinSound();
 
             coinCollected++;
 
@@ -108,8 +102,6 @@ public class Player : MonoBehaviour
 
     public void OnObstacleHit()
     {
-        //int randomInput = UnityEngine.Random.Range(0, stumbleSound.Length);
-        //audioSource.PlayOneShot(stumbleSound[randomInput], 1);
         // Drop speed immediately
         currentSpeed = obstacleSlowSpeed;
         animator.SetLayerWeight(1, 1);
@@ -142,5 +134,19 @@ public class Player : MonoBehaviour
     public void DeductCoin(int amount)
     {
         coinCollected = Mathf.Max(0, coinCollected - amount);
+    }
+
+    private void PlayCoinSound()
+    {
+        coinComboCounter++;
+
+        audioSource.pitch = soundPitch + (coinComboCounter -1f)* pitchStep;
+        audioSource.PlayOneShot(coinCollectSound);
+
+        if (coinComboCounter > groupSize)
+        {
+            coinComboCounter = 0;
+            audioSource.pitch = soundPitch;
+        }
     }
 }

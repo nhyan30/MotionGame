@@ -33,11 +33,13 @@ public class MenuUIHandler : MonoBehaviour
     private const string NUMBER_POPUP = "NumberPopUp";
     [SerializeField] Animator countdownAnimator;
     [SerializeField] TextMeshProUGUI countdownText;
+    AudioSource audioSource;
 
     private void Awake()
     {
         Instance = this;
         Fade(IdleUI, true);
+        audioSource = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -53,6 +55,7 @@ public class MenuUIHandler : MonoBehaviour
         touchToStartButton.onClick.AddListener(() =>
         {
             Fade(IdleUI, false, () => Fade(RegistrationUI, true));
+            audioSource.Play();
         });
     }
 
@@ -111,6 +114,8 @@ public class MenuUIHandler : MonoBehaviour
         Fade(RegistrationUI, false, () =>
         {
             StartCoroutine(StartGameCountdown());
+            audioSource.Stop();
+            GameManager.Instance.StartGameMusic();
         });
 
     }
