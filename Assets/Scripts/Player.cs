@@ -122,17 +122,9 @@ public class Player : MonoBehaviour
         animator.SetBool("Running", isEnabled);
     }
 
-    internal void SetWinningState(bool isEnabled)
-    {
-        animator.SetBool("Winning", isEnabled);
-    }
     internal void SetHittingState()
     {
         animator.SetTrigger("Hit");
-    }
-    internal void SetTurningState()
-    {
-        animator.SetTrigger("Turn");
     }
 
     public void DeductCoin(int amount)
