@@ -114,7 +114,11 @@ public class MenuUIHandler : MonoBehaviour
         Fade(RegistrationUI, false, () =>
         {
             StartCoroutine(StartGameCountdown());
-            audioSource.Stop();
+
+            audioSource.DOFade(0f, 1f).OnComplete(() =>
+            {
+                audioSource.Stop();
+            });
             GameManager.Instance.StartGameMusic();
         });
 

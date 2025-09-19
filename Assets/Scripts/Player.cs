@@ -22,11 +22,11 @@ public class Player : MonoBehaviour
 
     AudioSource audioSource;
     [SerializeField] AudioClip coinCollectSound;
+    [SerializeField] AudioClip winSound;
     [SerializeField] float pitchStep = 0.1f; // how much pitch increases per coin in a group
     [SerializeField] int groupSize = 3; 
     public int coinComboCounter = 0;
     public float soundPitch = 1.3f;
-
 
     private void Awake()
     {
@@ -130,6 +130,10 @@ public class Player : MonoBehaviour
     {
         animator.SetTrigger("Hit");
     }
+    internal void SetTurningState()
+    {
+        animator.SetTrigger("Turn");
+    }
 
     public void DeductCoin(int amount)
     {
@@ -148,5 +152,10 @@ public class Player : MonoBehaviour
             coinComboCounter = 0;
             audioSource.pitch = soundPitch;
         }
+    }
+
+    public void PlayWinSound()
+    {
+        audioSource.PlayOneShot(winSound);
     }
 }

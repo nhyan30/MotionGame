@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameCountdown;
     [SerializeField] GameObject gameOver;
     [SerializeField] float totalTime = 10f; // 60 seconds 
-    public float GameEndedTimeOut=5;
+    public float GameEndedTimeOut = 5f;
     public Animator ReemyAnimator;
     float elapsedTime = 0f;
 
@@ -24,11 +24,11 @@ public class GameManager : MonoBehaviour
     public Transform finishLookTarget;
     public CinemachineCamera cam1;
     public CinemachineCamera cam2;
+    public CinemachineCamera cam3;
 
     public ParticleSystem confetti;
 
     AudioSource audioSource;
-    public AudioClip WinSound;
 
     private void Awake()
     {
@@ -63,22 +63,19 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator GameEnded()
     {
-        audioSource.Stop();
+        audioSource.DOFade(0f, 1f).OnComplete(() =>
+        {
+            audioSource.Stop();
+            confetti.Play();
 
-        confetti.Play();
-        audioSource.PlayOneShot(WinSound);
+            Player.Instance.PlayWinSound();
+        });
+
+        cam3.Priority = 3;
 
         yield return new WaitForSeconds(2f);
 
-
         Player.Instance.SetRunningState(false);
-
-        //Player.Instance.transform
-        //    .DOLookAt(finishLookTarget.position, .3f) 
-        //    .OnComplete(() =>
-        //    {
-        //        Player.Instance.SetWinningState(true);
-        //    });
 
         yield return new WaitForSeconds(4f);
 
@@ -105,6 +102,8 @@ public class GameManager : MonoBehaviour
     }
     public void StartGameMusic()
     {
+        audioSource.volume = 0f; // start muted
         audioSource.Play();
+        audioSource.DOFade(1f, 1.5f);
     }
 }

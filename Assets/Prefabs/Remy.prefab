@@ -1124,8 +1124,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6181788246572073328}
-  - component: {fileID: 4998258333567379027}
-  - component: {fileID: 8527865897879472611}
   - component: {fileID: 5890393658897714248}
   - component: {fileID: 5165299402430530679}
   - component: {fileID: 3350138097891553490}
@@ -1160,43 +1158,6 @@ Transform:
   - {fileID: 5551464826295503291}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4998258333567379027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3197855572833367951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b9bbe8697114e84db25c6c79ddd06c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSpeed: {x: 1, y: 1}
-  recoveryAcceleration: 0.4
-  obstacleSlowSpeed: 0.4
-  coinCollected: 0
-  LimitLeft: -1
-  LimitRight: -0.438
-  coinCollectSound: {fileID: 8300000, guid: 8784f570a7c347e48a158f1a8458b89d, type: 3}
-  stumbleSound: {fileID: 8300000, guid: d218b367217194e4ca1a76167d688a05, type: 3}
---- !u!114 &8527865897879472611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3197855572833367951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8823256f791b264eac39923f8842ae7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  materials: []
-  emissionColor: {r: 0.5377358, g: 0, b: 0, a: 0.50980395}
-  flashDuration: 0.1
-  totalFlashTime: 1.5
-  isFlashing: 0
 --- !u!95 &5890393658897714248
 Animator:
   serializedVersion: 7
