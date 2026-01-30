@@ -104,6 +104,6 @@ public class GameManager : MonoBehaviour
     {
         audioSource.volume = 0f; // start muted
         audioSource.Play();
-        audioSource.DOFade(1f, 1.5f);
+        audioSource.DOFade(0.3f, 1.5f);
     }
 }
